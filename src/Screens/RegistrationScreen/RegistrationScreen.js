@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {Image, Platform, StatusBar, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import styles from "../styles";
+import {firebase} from "../../firebase/config";
 
 const RegistrationScreen = ({navigation}) => {
     const [fullName, setFullName] = useState('')
@@ -9,11 +10,38 @@ const RegistrationScreen = ({navigation}) => {
     const [confirmPassword, setConfirmPassword] = useState('')
 
     const onFooterLinkPress = () => {
-        navigation.navigate('Login')
+        navigation.navigate('Login');
     }
 
     const onRegisterPress = () => {
-
+        if (password !== confirmPassword) {
+            alert ("passwords do not match");
+            return;
+        }
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then((response) => {
+                const uid = response.user.uid
+                const data = {
+                    id: uid,
+                    email,
+                    fullName,
+                };
+                const usersRef = firebase.firestore().collection('users');
+                usersRef
+                    .doc(uid)
+                    .set(data)
+                    .then(() => {
+                        navigation.navigate('Login');
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    })
+            })
+            .catch((error) => {
+                alert(error);
+            })
     }
     const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
     const HEADER_HEIGHT = Platform.OS === 'ios'  ? 44 : 56;
@@ -47,7 +75,6 @@ const RegistrationScreen = ({navigation}) => {
                     placeholder="E-mail"
                     placeholderTextColor="#aaaaaa"
                     autoCapitalize="none"
-                    secureTextEntry
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -59,6 +86,7 @@ const RegistrationScreen = ({navigation}) => {
                     placeholderTextColor="#aaaaaa"
                     autoCapitalize='none'
                     underlineColorAndroid="transparent"
+                    secureTextEntry
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -70,12 +98,13 @@ const RegistrationScreen = ({navigation}) => {
                     placeholderTextColor="#aaaaaa"
                     autoCapitalize='none'
                     underlineColorAndroid="transparent"
+                    secureTextEntry
                 />
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={styles.largeButton}
-                    onPress={() => onFooterLinkPress()}>
+                    onPress={() => onRegisterPress()}>
                     <Text style={styles.buttonText}>Sign Up!</Text>
                 </TouchableOpacity>
             </View>

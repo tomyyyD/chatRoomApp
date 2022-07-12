@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {Button, Image, Platform, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import styles from '../styles'
-import platform from "react-native-web/dist/exports/Platform";
+import {firebase} from '../../firebase/config'
 
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -12,7 +12,30 @@ const LoginScreen = ({navigation}) => {
     }
 
     const onLoginPress = () => {
-
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then((response) => {
+                const uid = response.user.uid;
+                const usersRef = firebase.firestore().collection('users')
+                usersRef
+                    .doc(uid)
+                    .get()
+                    .then(firestoreDocument => {
+                        if (!firestoreDocument.exists) {
+                            alert("User does not exist anymore");
+                            return;
+                        }
+                        const user = firestoreDocument.data();
+                        navigation.navigate('Home', {user: user})
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    })
+            })
+            .catch((error) => {
+                alert(error);
+            })
     }
 
     const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
@@ -53,7 +76,7 @@ const LoginScreen = ({navigation}) => {
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={styles.buttonAlt}
-                    onPress={() => onFooterLinkPress()}>
+                    onPress={() => onLoginPress()}>
                     <Text style={styles.buttonAltText}>Log In</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
