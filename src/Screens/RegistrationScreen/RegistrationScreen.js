@@ -43,7 +43,7 @@ const RegistrationScreen = ({navigation}) => {
                 alert(error);
             })
     }
-    const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+    // const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
     const HEADER_HEIGHT = Platform.OS === 'ios'  ? 44 : 56;
 
     return (

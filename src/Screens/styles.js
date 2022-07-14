@@ -2,6 +2,7 @@ import {StyleSheet} from "react-native";
 
 const mainColor = '#232329'
 const themeColor = '#14d7de'
+const tertiaryColor = "#fada39"
 
 const styles = StyleSheet.create({
     container: {
@@ -75,6 +76,66 @@ const styles = StyleSheet.create({
     buttonAltText: {
         color: themeColor,
         fontFamily: 'NotoSans_700Bold',
+    },
+    contentContainer: {
+        flex:1,
+        width: "100%",
+    },
+    messagingContainer: {
+        width: '90%',
+        flexDirection: 'row',
+        paddingBottom: 60,
+        alignItems: 'center',
+    },
+    messagingButton: {
+        borderRadius: '15%',
+        borderColor: themeColor,
+        borderWidth: 2,
+        width: '25%',
+        alignItems: "center",
+        padding: 10,
+        marginLeft: '4%',
+    },
+    sentMessageContainer: {
+        backgroundColor: themeColor,
+        color: mainColor,
+        margin: 5,
+        padding: 10,
+        borderRadius: 10,
+        alignItems: "flex-end",
+        maxWidth: '80%',
+    },
+    receivedMessageContainer: {
+        margin: 5,
+        backgroundColor: tertiaryColor,
+        padding: 10,
+        borderRadius: 10,
+        alignItems: "flex-start",
+        maxWidth: '80%',
+    },
+    messageText: {
+        color: mainColor,
+        fontFamily: 'NotoSans_700Bold',
+        fontSize: 18,
+    },
+    messageHeader: {
+        color: themeColor,
+        marginTop: 10,
+        marginRight: 5.
+    },
+    messageHeaderAlt: {
+        color: tertiaryColor,
+        marginTop: 10,
+        marginRight: 5,
+    },
+    listContainer:{
+        height: '95%',
+        marginTop: '2%',
+    },
+    signOutContainer: {
+        marginTop: 40,
+        alignItems: "flex-start",
+        width: '95%',
     }
 })
 

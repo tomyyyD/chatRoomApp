@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Button, Image, Platform, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import {Image, Platform, StatusBar, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import styles from '../styles'
 import {firebase} from '../../firebase/config'
 
@@ -37,8 +37,7 @@ const LoginScreen = ({navigation}) => {
                 alert(error);
             })
     }
-
-    const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+    
     const HEADER_HEIGHT = Platform.OS === 'ios'  ? 44 : 56;
 
     return (
@@ -47,7 +46,7 @@ const LoginScreen = ({navigation}) => {
                 <StatusBar barStyle='light-content' translucent/>
             </View>
             <Image
-                source={require('../../../assets/userIcon.png')}
+                source={require('../../../assets/userIcon2.png')}
                 style={styles.logo}
             />
             <Text style={styles.title}>Welcome!</Text>
