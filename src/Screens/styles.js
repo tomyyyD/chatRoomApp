@@ -121,12 +121,12 @@ const styles = StyleSheet.create({
     messageHeader: {
         color: themeColor,
         marginTop: 10,
-        marginRight: 5.
+        marginHorizontal: 5.
     },
     messageHeaderAlt: {
         color: tertiaryColor,
         marginTop: 10,
-        marginRight: 5,
+        marginHorizontal: 5,
     },
     listContainer:{
         height: '95%',
@@ -136,6 +136,24 @@ const styles = StyleSheet.create({
         marginTop: 40,
         alignItems: "flex-start",
         width: '95%',
+    },
+    roomContainer: {
+        borderBottomColor: themeColor,
+        borderBottomWidth: 2,
+        padding: 5,
+        marginBottom: 10,
+        width: '100%',
+    },
+    roomListContainer: {
+        height: '85%',
+        alignItems: "center",
+        width: '80%'
+    },
+    createRoomContainer: {
+        width: '90%',
+        flexDirection: 'row',
+        paddingVertical: 20,
+        alignItems: 'center',
     }
 })
 

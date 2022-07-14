@@ -67,34 +67,18 @@ const HomeScreen = ({route, navigation}) => {
     }
 
     const renderEntity = ({item}) => {
-        if (userID === item.authorID){
-            return (
-                <View style={{alignItems:"flex-end"}}>
-                    <Text style={styles.messageHeader}>
-                        {item.authorName}
+        return (
+            <View style={styles.roomContainer}>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate("Chat", {room: item.id, roomName: item.text, user: userID, name: userName})
+                }}>
+                    <Text style={styles.buttonAltText}>
+                        {item.text}
                     </Text>
-                    <View style={styles.sentMessageContainer}>
-                        <Text style={styles.messageText}>
-                            {item.text}
-                        </Text>
-                    </View>
-                </View>
-            )
-        }else{
-            return (
-                <View style={{alignItems:"flex-start"}}>
-                    <Text style={styles.messageHeaderAlt}>
-                        {item.authorName}
-                    </Text>
-                    <View style={styles.receivedMessageContainer}>
-                        <Text style={styles.messageText}>
-                            {item.text}
-                        </Text>
-                    </View>
-                </View>
-            )
-        }
-    }
+                </TouchableOpacity>
+            </View>
+        )
+}
 
     return (
         <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
@@ -106,24 +90,11 @@ const HomeScreen = ({route, navigation}) => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.contentContainer}>
-                    { entities && (
-                        <View style={styles.listContainer}>
-                            <FlatList
-                                data={entities}
-                                renderItem={renderEntity}
-                                keyExtractor={(item) => item.id}
-                                removeClippedSubviews={true}
-                                inverted={true}
-                            />
-                        </View>
-                    )}
-                </View>
-                <View style={styles.messagingContainer}>
+                <View style={styles.createRoomContainer}>
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
-                            placeholder="send message"
+                            placeholder="Create Room"
                             placeholderTextColor="#aaaaaa"
                             onChangeText={(text) => setEntityText(text)}
                             value={entityText}
@@ -132,9 +103,25 @@ const HomeScreen = ({route, navigation}) => {
                         />
                     </View>
                     <TouchableOpacity style={styles.messagingButton} onPress={onSend}>
-                        <Text style={styles.buttonAltText}>Send</Text>
+                        <Text style={styles.buttonAltText}>Create</Text>
                     </TouchableOpacity>
                 </View>
+                <View>
+                    <Text style={styles.messageHeaderAlt}>Rooms</Text>
+                </View>
+                <View>
+                    { entities && (
+                        <View style={styles.roomListContainer}>
+                            <FlatList
+                                data={entities}
+                                renderItem={renderEntity}
+                                keyExtractor={(item) => item.id}
+                                removeClippedSubviews={true}
+                            />
+                        </View>
+                    )}
+                </View>
+
             </View>
         </KeyboardAvoidingView>
     )
